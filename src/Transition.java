@@ -1,10 +1,10 @@
 import java.util.List;
 
 public class Transition {
+    private String name;
     private List<Arc> arcList;
 
-    public Transition() {
-    }
+    public Transition() { }
 
     public Transition(List<Arc> arcList) {
         this.arcList = arcList;
@@ -17,5 +17,4 @@ public class Transition {
     public void setArcList(List<Arc> arcList) {
         this.arcList = arcList;
     }
-
 }

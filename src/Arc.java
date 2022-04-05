@@ -1,19 +1,31 @@
 public class Arc {
-    Transition transition;
-    Place place;
-    int cardinality;
+    protected Transition transition;
+    protected Place place;
 
     public Arc() {
     }
 
-    public Arc(Transition transition, int cardinality) {
+    public Arc(Transition transition) {
         this.transition = transition;
-        this.cardinality = cardinality;
     }
 
-    public Arc(Place place, int cardinality) {
+    public Arc(Place place) {
         this.place = place;
-        this.cardinality = cardinality;
     }
 
+    public Transition getTransition() {
+        return transition;
+    }
+
+    public void setTransition(Transition transition) {
+        this.transition = transition;
+    }
+
+    public Place getPlace() {
+        return place;
+    }
+
+    public void setPlace(Place place) {
+        this.place = place;
+    }
 }

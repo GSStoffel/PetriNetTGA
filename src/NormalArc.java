@@ -1,30 +1,47 @@
 public class NormalArc extends Arc {
 
-    Transition transition;
-    Place place;
-    int cardinality;
+    private int cardinality;
+
+    public NormalArc(int cardinality) {
+        super();
+        this.cardinality = cardinality;
+    }
 
     public NormalArc(Place place, int cardinality) {
-        super(place, cardinality);
+        super(place);
+        this.cardinality = cardinality;
     }
 
     public NormalArc(Transition transition, int cardinality) {
-        super(transition, cardinality);
+        super(transition);
+        this.cardinality = cardinality;
     }
 
-    public Place getPlace() {
-        return place;
-    }
-
+    @Override
     public Transition getTransition() {
         return transition;
     }
 
+    @Override
+    public void setTransition(Transition transition) {
+        this.transition = transition;
+    }
+
+    @Override
+    public Place getPlace() {
+        return place;
+    }
+
+    @Override
     public void setPlace(Place place) {
         this.place = place;
     }
 
-    public void setTransition(Transition transition) {
-        this.transition = transition;
+    public int getCardinality() {
+        return cardinality;
+    }
+
+    public void setCardinality(int cardinality) {
+        this.cardinality = cardinality;
     }
 }

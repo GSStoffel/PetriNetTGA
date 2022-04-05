@@ -1,6 +1,7 @@
 import java.util.List;
 
 public class Place {
+    private String name;
     private int tokens;
     private List<Arc> arcList;
     private Action action;
@@ -27,19 +28,34 @@ public class Place {
         return tokens;
     }
 
+    public void setTokens(int tokens) {
+        this.tokens = tokens;
+    }
+
     public List<Arc> getArcList() {
         return arcList;
+    }
+
+    public void setArcList(List<Arc> arcList) {
+        this.arcList = arcList;
+    }
+
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
+    }
+
+    public void addToken() { tokens++; }
+
+    public void subToken() {
+        tokens--;
     }
 
     public void executeAction() {
         action.execute();
     }
 
-    public void addToken() {
-        tokens++;
-    }
-
-    public void subToken() {
-        tokens--;
-    }
 }
