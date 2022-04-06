@@ -1,4 +1,9 @@
 
 public class PetriTest {
- //teste
+	
+	public static void main(String[] args) {
+		PetriIN pin = new PetriIN();
+		pin.loadData("src/tests/petri-test.txt");
+		
+	}
 }
