@@ -25,4 +25,12 @@ public class Transition {
         }
         return true;
     }
+    
+    public void getInArcList() {
+        return inArcList;
+    }
+    
+    public void getOutArcList() {
+        return outArcList;
+    }
 }
