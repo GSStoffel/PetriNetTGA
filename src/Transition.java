@@ -25,15 +25,4 @@ public class Transition {
         }
         return true;
     }
-
-    public void run(){
-        if(is_runnable()){
-            for (Arc arc : inArcList) {
-                arc.run();
-            }
-            for (Arc arc : outArcList) {
-                arc.run();
-            }
-        }
-    }
 }
