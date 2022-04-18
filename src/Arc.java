@@ -1,31 +1,14 @@
-public class Arc {
-    protected Transition transition;
-    protected Place place;
+public abstract class Arc {
+    protected Object input;
+    protected Object output;
 
-    public Arc() {
+    public Object getInput() {
+        return input;
     }
 
-    public Arc(Transition transition) {
-        this.transition = transition;
+    public Object getOutput() {
+        return output;
     }
 
-    public Arc(Place place) {
-        this.place = place;
-    }
-
-    public Transition getTransition() {
-        return transition;
-    }
-
-    public void setTransition(Transition transition) {
-        this.transition = transition;
-    }
-
-    public Place getPlace() {
-        return place;
-    }
-
-    public void setPlace(Place place) {
-        this.place = place;
-    }
+    abstract void run();
 }

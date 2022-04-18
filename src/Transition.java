@@ -2,19 +2,30 @@ import java.util.List;
 
 public class Transition {
     private String name;
-    private List<Arc> arcList;
+    private List<Arc> inArcList;
+    private List<Arc> outArcList;
 
-    public Transition() { }
-
-    public Transition(List<Arc> arcList) {
-        this.arcList = arcList;
+    public boolean is_runnable(){
+        for (Arc arc : inArcList) {
+            if (arc instanceof NormalArc){
+                if(arc.getInput() instanceof Place) {
+                    if(((NormalArc) arc).getCardinality() > ((Place) arc.getInput()).getTokens()){
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
-    public List<Arc> getArcList() {
-        return arcList;
-    }
-
-    public void setArcList(List<Arc> arcList) {
-        this.arcList = arcList;
+    public void run(){
+        if(is_runnable()){
+            for (Arc arc : inArcList) {
+                arc.run();
+            }
+            for (Arc arc : outArcList) {
+                arc.run();
+            }
+        }
     }
 }

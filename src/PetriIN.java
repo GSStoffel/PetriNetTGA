@@ -26,7 +26,7 @@ public class PetriIN {
 				
 				switch (sline[0]) {
 				case "0":
-					Place place = new Place(1);
+					Place place = new Place();
 					Transition transition = new Transition();
 					break;
 					

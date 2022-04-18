@@ -6,7 +6,7 @@ public class PetriNet {
     List<Transition> transitions = new ArrayList<>();
     List<NormalArc> normalArcs = new ArrayList<>();
     List<ResetArc> resetArcs = new ArrayList<>();
-    List<InibitorArc> inibitorArcs = new ArrayList<>();
+    List<InhibitorArc> inhibitorArcs = new ArrayList<>();
 
     public PetriNet() {
     }
@@ -43,11 +43,11 @@ public class PetriNet {
         this.resetArcs = resetArcs;
     }
 
-    public List<InibitorArc> getInibitorArcs() {
-        return inibitorArcs;
+    public List<InhibitorArc> getInibitorArcs() {
+        return inhibitorArcs;
     }
 
-    public void setInibitorArcs(List<InibitorArc> inibitorArcs) {
-        this.inibitorArcs = inibitorArcs;
+    public void setInibitorArcs(List<InhibitorArc> inhibitorArcs) {
+        this.inhibitorArcs = inhibitorArcs;
     }
 }
