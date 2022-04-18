@@ -11,18 +11,25 @@ public class Place {
         return tokens;
     }
 
-    public void addToken(int n) { tokens += n; }
+    public void addToken(int n) {
+        tokens += n;
+        executeAction();
+    }
 
     public void subToken(int n) {
         tokens -= n;
+        executeAction();
     }
 
     public void removeAllTokens() {
         tokens=0;
+        executeAction();
     }
 
     public void executeAction() {
-        action.execute();
+        if(action != null) {
+            action.execute();
+        }
     }
 
 }
