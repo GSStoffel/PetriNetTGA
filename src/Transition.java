@@ -26,11 +26,11 @@ public class Transition {
         return true;
     }
     
-    public void getInArcList() {
+    public List<Arc> getInArcList() {
         return inArcList;
     }
     
-    public void getOutArcList() {
+    public List<Arc> getOutArcList() {
         return outArcList;
     }
 }
