@@ -8,8 +8,16 @@ public class Transition {
     public boolean is_runnable(){
         for (Arc arc : inArcList) {
             if (arc instanceof NormalArc){
-                if(arc.getInput() instanceof Place) {
+                if(arc.getOutput() instanceof Place) {
                     if(((NormalArc) arc).getCardinality() > ((Place) arc.getInput()).getTokens()){
+                        return false;
+                    }
+                }
+            }
+            
+            if (arc instanceof InhibitorArc){
+                if(arc.getOutput() instanceof Place) {
+                    if(((InhibitorArc) arc).getCardinality() <= ((Place) arc.getOutput()).getTokens()){
                         return false;
                     }
                 }
