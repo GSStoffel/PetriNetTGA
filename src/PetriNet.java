@@ -1,8 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PetriNet {
     List<Place> places = new ArrayList<>();
+
+    Map<String, Place> places_kv = new HashMap<String, Place>();
     List<Transition> transitions = new ArrayList<>();
     List<NormalArc> normalArcs = new ArrayList<>();
     List<ResetArc> resetArcs = new ArrayList<>();
