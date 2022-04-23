@@ -1,9 +1,10 @@
 import java.util.List;
 
 public class Transition {
-    private String name;
+    private String label;
     private List<Arc> inArcList;
     private List<Arc> outArcList;
+    private Action action;
 
     public boolean is_runnable(){
         for (Arc arc : inArcList) {
@@ -32,5 +33,15 @@ public class Transition {
     
     public List<Arc> getOutArcList() {
         return outArcList;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void executeAction() {
+        if(action != null) {
+            action.execute();
+        }
     }
 }

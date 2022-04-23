@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Place {
-    private String name;
+    private String label;
     private int tokens;
     private List<Arc> outArcList;
     private List<Arc> inArcList;
@@ -32,4 +32,15 @@ public class Place {
         }
     }
 
+    public String getLabel() {
+        return label;
+    }
+
+    public List<Arc> getOutArcList() {
+        return outArcList;
+    }
+
+    public List<Arc> getInArcList() {
+        return inArcList;
+    }
 }

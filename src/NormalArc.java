@@ -20,7 +20,7 @@ public class NormalArc extends Arc {
         }
 
         if(output instanceof Place){
-            ((Place)input).subToken(cardinality);
+            ((Place)output).subToken(cardinality);
         }
     }
 }
