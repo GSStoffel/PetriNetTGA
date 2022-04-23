@@ -1,9 +1,24 @@
 import java.util.List;
 
 public class Transition {
-    private String name;
+    private String label;
     private List<Arc> inArcList;
     private List<Arc> outArcList;
+
+    public Transition() {
+    }
+
+    public Transition(String label) {
+        this.label = label;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
     public boolean is_runnable(){
         for (Arc arc : inArcList) {

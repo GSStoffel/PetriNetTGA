@@ -1,0 +1,24 @@
+{
+"places": [
+    {"label": "1", "tokens": 1},
+    {"label": "3", "tokens": 0},
+    {"label": "4", "tokens": 0},
+    {"label": "5", "tokens": 0}
+  ],
+
+  "transitions": [
+    {"label": "1"},
+    {"label": "2"}
+  ],
+
+  "arc-transition-to-place": [
+    {"transition": "1", "place": "3", "weight": 1},
+    {"transition": "2", "place": "4", "weight": 1},
+    {"transition": "2", "place": "5", "weight": 1}
+  ],
+
+  "arc-place-to-transition": [
+    {"place": "1", "transition": "1", "type": 0, "weight": 1},
+    {"place": "3", "transition": "2", "type": 0, "weight": 1}
+  ]
+}
