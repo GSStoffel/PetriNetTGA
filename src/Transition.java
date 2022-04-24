@@ -14,6 +14,11 @@ public class Transition {
         this.label = label;
     }
 
+    public Transition(String label, Action action) {
+        this.label = label;
+        this.action = action;
+    }
+
     public boolean is_runnable() {
         for (Arc arc : inArcList) {
             if (arc instanceof NormalArc) {
@@ -47,6 +52,10 @@ public class Transition {
 
     public String getLabel() {
         return label;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     public void executeAction() {

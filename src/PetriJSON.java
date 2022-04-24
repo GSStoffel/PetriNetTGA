@@ -37,12 +37,12 @@ public class PetriJSON {
             JSONArray ja_arc_ttp = (JSONArray) jsonObject.get("arc-transition-to-place");
             for (Object o : ja_arc_ttp) {
                 JSONObject jobj_arc = (JSONObject) o;
-                String place_label = (String) jobj_arc.get("place");
-                String transition_label = (String) jobj_arc.get("transition");
+                String placeLabel = (String) jobj_arc.get("place");
+                String transitionLabel = (String) jobj_arc.get("transition");
 
                 Arc arc = new NormalArc(((Long) jobj_arc.get("weight")).intValue());
-                Place curPlace = petriNet.getPlaceByLabel(place_label);
-                Transition curTransition = petriNet.getTransitionByLabel(transition_label);
+                Place curPlace = petriNet.getPlaceByLabel(placeLabel);
+                Transition curTransition = petriNet.getTransitionByLabel(transitionLabel);
 
                 petriNet.connect(curTransition, curPlace, arc);
             }

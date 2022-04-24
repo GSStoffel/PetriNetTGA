@@ -20,6 +20,17 @@ public class Place {
         this.tokens = tokens;
     }
 
+    public Place(String label, Action action) {
+        this.label = label;
+        this.action = action;
+    }
+
+    public Place(String label, int tokens, Action action) {
+        this.label = label;
+        this.tokens = tokens;
+        this.action = action;
+    }
+
     public int getTokens() {
         return tokens;
     }
@@ -65,6 +76,10 @@ public class Place {
 
     public List<Arc> getInArcList() {
         return inArcList;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 
     @Override
