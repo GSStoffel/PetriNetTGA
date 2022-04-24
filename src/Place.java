@@ -45,14 +45,14 @@ public class Place {
         }
     }
 
-    public int getTotalOutputNormalArcRunnable() {
-        int total = 0;
+    public List<Arc> getOutputNormalArcsRunnable() {
+        List<Arc> arcs = new ArrayList<>();
         for (Arc arc : outArcList) {
             if (arc instanceof NormalArc)
-                if (((Transition)arc.getInput()).is_runnable())
-                    total++;
+                if (((Transition) arc.getInput()).is_runnable())
+                    arcs.add(arc);
         }
-        return total;
+        return arcs;
     }
 
     public String getLabel() {

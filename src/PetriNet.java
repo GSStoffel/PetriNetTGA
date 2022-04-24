@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class PetriNet {
     List<Place> places = new ArrayList<>();
@@ -61,9 +62,27 @@ public class PetriNet {
         while (transition.is_runnable()) {
             List<Arc> inArcList = transition.getInArcList();
             List<Arc> outArcList = transition.getOutArcList();
+
             for (Arc arc : inArcList) {
-                arc.run();
+                if (((Place) arc.getOutput()).getOutputNormalArcsRunnable().size() > 1){
+                    Place place = (Place) arc.getOutput();
+                    List<Arc> outputNormalArcsRunnable = place.getOutputNormalArcsRunnable();
+
+                    Random random = new Random();
+                    int index = random.nextInt(outputNormalArcsRunnable.size());
+                    System.out.println("index: " + index);
+                    Arc arc1 = outputNormalArcsRunnable.get(index);
+                    arc1.run();
+                    Transition inputTransition = (Transition) arc1.getInput();
+                    List<Arc> transitionOutArcList = inputTransition.getOutArcList();
+                    for (Arc arcTransitionOutArcList : transitionOutArcList) {
+                        arcTransitionOutArcList.run();
+                    }
+                } else {
+                    arc.run();
+                }
             }
+
             for (Arc arc : outArcList) {
                 arc.run();
             }
@@ -139,14 +158,14 @@ public class PetriNet {
 
     @Override
     public String toString() {
-        String networkState = "\nPlaces: ";
+        StringBuilder networkState = new StringBuilder("\nPlaces: ");
         for (Place place : places) {
-            networkState += place.toString();
+            networkState.append(place.toString());
         }
-        networkState += "\nTransitions: ";
+        networkState.append("\nTransitions: ");
         for (Transition transition : transitions) {
-            networkState += transition.toString();
+            networkState.append(transition.toString());
         }
-        return networkState;
+        return networkState.toString();
     }
 }
