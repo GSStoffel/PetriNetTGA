@@ -1,57 +1,137 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
 
 public class PetriNet {
     List<Place> places = new ArrayList<>();
-
-    Map<String, Place> places_kv = new HashMap<String, Place>();
     List<Transition> transitions = new ArrayList<>();
-    List<NormalArc> normalArcs = new ArrayList<>();
-    List<ResetArc> resetArcs = new ArrayList<>();
-    List<InhibitorArc> inhibitorArcs = new ArrayList<>();
+    List<Arc> arcs = new ArrayList<>();
 
-    public PetriNet() {
+    public void run() {
+        int ciclo = 1;
+        List<Transition> runnableTransitions = getRunnableTransitions();
+
+        while (!runnableTransitions.isEmpty()) {
+            System.out.println("\nEstado do ciclo " + ciclo + ": " + this + "\n\n------------------------------");
+
+            for (Transition transition : runnableTransitions) {
+                executeTransition(transition);
+            }
+            runnableTransitions = getRunnableTransitions();
+            ciclo++;
+        }
+        System.out.println("\nEstado do ciclo " + ciclo + ": " + this + "\n\n------------------------------");
+        System.out.println("\nNão há mais nenhuma transição habilitada!");
     }
 
-    public List<Place> getPlaces() {
-        return places;
+    private void executeTransition(Transition transition) {
+        while (transition.is_runnable()) {
+            List<Arc> inArcList = transition.getInArcList();
+            List<Arc> outArcList = transition.getOutArcList();
+
+            for (Arc arc : inArcList) {
+                if (((Place) arc.getOutput()).getOutputNormalArcsRunnable().size() > 1){
+                    Place place = (Place) arc.getOutput();
+                    List<Arc> outputNormalArcsRunnable = place.getOutputNormalArcsRunnable();
+
+                    Random random = new Random();
+                    int index = random.nextInt(outputNormalArcsRunnable.size());
+                    System.out.println("index: " + index);
+                    Arc arc1 = outputNormalArcsRunnable.get(index);
+                    arc1.run();
+                    Transition inputTransition = (Transition) arc1.getInput();
+                    List<Arc> transitionOutArcList = inputTransition.getOutArcList();
+                    for (Arc arcTransitionOutArcList : transitionOutArcList) {
+                        arcTransitionOutArcList.run();
+                    }
+                } else {
+                    arc.run();
+                }
+            }
+
+            for (Arc arc : outArcList) {
+                arc.run();
+            }
+        }
     }
 
-    public void setPlaces(List<Place> places) {
-        this.places = places;
+    public void add(Place place) {
+        if (!places.contains(place))
+            places.add(place);
     }
 
-    public List<Transition> getTransitions() {
-        return transitions;
+    public void add(Transition transition) {
+        if (!transitions.contains(transition))
+            transitions.add(transition);
     }
 
-    public void setTransitions(List<Transition> transitions) {
-        this.transitions = transitions;
+    public void add(Arc arc) {
+        if (!arcs.contains(arc))
+            arcs.add(arc);
     }
 
-    public List<NormalArc> getNormalArcs() {
-        return normalArcs;
+    public void connect(Place place, Transition transition, Arc arc) {
+        add(place);
+        add(transition);
+        add(arc);
+
+        place.getOutArcList().add(arc);
+        transition.getInArcList().add(arc);
+
+        arc.setOutput(place);
+        arc.setInput(transition);
     }
 
-    public void setNormalArcs(List<NormalArc> normalArcs) {
-        this.normalArcs = normalArcs;
+    public void connect(Transition transition, Place place, Arc arc) {
+        add(transition);
+        add(place);
+        add(arc);
+
+        transition.getOutArcList().add(arc);
+        place.getInArcList().add(arc);
+
+        arc.setOutput(transition);
+        arc.setInput(place);
     }
 
-    public List<ResetArc> getResetArcs() {
-        return resetArcs;
+    private List<Transition> getRunnableTransitions() {
+        List<Transition> runnableTransitions = new ArrayList<>();
+        for (Transition transition : transitions) {
+            if (transition.is_runnable()) {
+                runnableTransitions.add(transition);
+            }
+        }
+        return runnableTransitions;
     }
 
-    public void setResetArcs(List<ResetArc> resetArcs) {
-        this.resetArcs = resetArcs;
+    public Place getPlaceByLabel(String label) {
+        for (Place place : places) {
+            if (place.getLabel().equals(label)) {
+                return place;
+            }
+        }
+        return null;
     }
 
-    public List<InhibitorArc> getInibitorArcs() {
-        return inhibitorArcs;
+    public Transition getTransitionByLabel(String label) {
+        for (Transition transition : transitions) {
+            if (transition.getLabel().equals(label)) {
+                return transition;
+            }
+        }
+        return null;
     }
 
-    public void setInibitorArcs(List<InhibitorArc> inhibitorArcs) {
-        this.inhibitorArcs = inhibitorArcs;
+    @Override
+    public String toString() {
+        StringBuilder networkState = new StringBuilder("\nPlaces: ");
+        for (Place place : places) {
+            networkState.append(place.toString());
+        }
+        networkState.append("\nTransitions: ");
+        for (Transition transition : transitions) {
+            networkState.append(transition.toString());
+        }
+        return networkState.toString();
     }
 }
