@@ -1,9 +1,13 @@
 public abstract class Arc {
-    protected String label;
     protected Object input;
     protected Object output;
+    protected int cardinality = 1;
 
     abstract void run();
+
+    public int getCardinality() {
+        return cardinality;
+    }
 
     public Object getInput() {
         return input;
@@ -11,14 +15,6 @@ public abstract class Arc {
 
     public Object getOutput() {
         return output;
-    }
-
-    public String getLabel(){
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public void setInput(Object input) {

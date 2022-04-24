@@ -1,71 +1,118 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class PetriNet {
     List<Place> places = new ArrayList<>();
     List<Transition> transitions = new ArrayList<>();
-    List<NormalArc> normalArcs = new ArrayList<>();
-    List<ResetArc> resetArcs = new ArrayList<>();
-    List<InhibitorArc> inhibitorArcs = new ArrayList<>();
+    List<Arc> arcs = new ArrayList<>();
 
-    public void run(){
+//    public void run() {
+//        List<Transition> runnableTransitions = getRunnableTransitions();
+//
+//        if (!runnableTransitions.isEmpty()) {
+//            for (Transition runnableTransition : runnableTransitions) {
+//                if (runnableTransition.is_runnable()) {
+//                    List<Arc> inArcList = runnableTransition.getInArcList();
+//                    List<Arc> outArcList = runnableTransition.getOutArcList();
+//                    for (Arc arc : inArcList) {
+//                        if (arc instanceof NormalArc) {
+//                            while (((Place) arc.getOutput()).getTokens() >= ((NormalArc) arc).getCardinality()) {
+//                                Place place = (Place) arc.getOutput();
+//                                List<Arc> placeOutArcList = place.getOutArcList();
+//                                if (placeOutArcList.size() > 1) {
+//                                    Random random = new Random();
+//                                    placeOutArcList.get(random.nextInt(placeOutArcList.size())).run();
+//                                } else {
+//                                    arc.run();
+//                                }
+//                            }
+//                        } else {
+//                            arc.run();
+//                        }
+//                    }
+//                    for (Arc arc : outArcList) {
+//                        arc.run();
+//                    }
+//                }
+//            }
+//        } else {
+//            System.out.println("Não há transições disponiveis para execução!");
+//        }
+//    }
+
+    public void run() {
+        int ciclo = 1;
         List<Transition> runnableTransitions = getRunnableTransitions();
 
-        if(!runnableTransitions.isEmpty()){
-            for(Transition runnableTransition : runnableTransitions) {
+        while (!runnableTransitions.isEmpty()) {
+            System.out.println("\nEstado do ciclo " + ciclo + ": " + this + "\n\n------------------------------");
 
-                /*
-                    Devido a concorrência a transição pode se tornar inativa então é verificado
-                    se a mesma ainda está ativa
-                 */
-                if (runnableTransition.is_runnable()) {
-                    List<Arc> inArcList = runnableTransition.getInArcList();
-                    List<Arc> outArcList = runnableTransition.getOutArcList();
+            for (Transition transition : runnableTransitions) {
+                executeTransition(transition);
+            }
+            runnableTransitions = getRunnableTransitions();
+            ciclo++;
+        }
+        System.out.println("\nEstado do ciclo " + ciclo + ": " + this + "\n\n------------------------------");
+        System.out.println("\nNão há mais nenhuma transição habilitada!");
+    }
 
-                    for (Arc arc : inArcList) {
-                        if(arc instanceof NormalArc) {
-                            while (((Place) arc.getOutput()).getTokens() >= ((NormalArc)arc).getCardinality()) {
-                                Place place = (Place) arc.getOutput();
-                                List<Arc> placeOutArcList = place.getOutArcList();
-                                if (placeOutArcList.size() > 1) {
-                                    Random random = new Random();
-                                    placeOutArcList.get(random.nextInt(placeOutArcList.size())).run();
-                                } else {
-                                    arc.run();
-                                }
-                            }
-                        } else {
-                            arc.run();
-                        }
-                    }
-                    for (Arc arc : outArcList) {
-                        arc.run();
-                    }
-                }
+    private void executeTransition(Transition transition) {
+        while (transition.is_runnable()) {
+            List<Arc> inArcList = transition.getInArcList();
+            List<Arc> outArcList = transition.getOutArcList();
+            for (Arc arc : inArcList) {
+                arc.run();
+            }
+            for (Arc arc : outArcList) {
+                arc.run();
             }
         }
     }
 
-    public void connect (Place place, Transition transition, Arc arc) {
+    public void add(Place place) {
+        if (!places.contains(place))
+            places.add(place);
+    }
+
+    public void add(Transition transition) {
+        if (!transitions.contains(transition))
+            transitions.add(transition);
+    }
+
+    public void add(Arc arc) {
+        if (!arcs.contains(arc))
+            arcs.add(arc);
+    }
+
+    public void connect(Place place, Transition transition, Arc arc) {
+        add(place);
+        add(transition);
+        add(arc);
+
         place.getOutArcList().add(arc);
         transition.getInArcList().add(arc);
+
         arc.setOutput(place);
         arc.setInput(transition);
     }
 
-    public void connect (Transition transition, Place place, Arc arc) {
+    public void connect(Transition transition, Place place, Arc arc) {
+        add(transition);
+        add(place);
+        add(arc);
+
         transition.getOutArcList().add(arc);
         place.getInArcList().add(arc);
-        arc.setOutput(place);
-        arc.setInput(transition);
+
+        arc.setOutput(transition);
+        arc.setInput(place);
     }
 
     private List<Transition> getRunnableTransitions() {
         List<Transition> runnableTransitions = new ArrayList<>();
-
-        for(Transition transition : transitions) {
-            if(transition.is_runnable()) {
+        for (Transition transition : transitions) {
+            if (transition.is_runnable()) {
                 runnableTransitions.add(transition);
             }
         }
@@ -90,30 +137,16 @@ public class PetriNet {
         return null;
     }
 
-    public NormalArc getNormalArcByLabel(String label) {
-        for (NormalArc arc : normalArcs) {
-            if (arc.getLabel().equals(label)) {
-                return arc;
-            }
+    @Override
+    public String toString() {
+        String networkState = "\nPlaces: ";
+        for (Place place : places) {
+            networkState += place.toString();
         }
-        return null;
-    }
-
-    public ResetArc getResetArcByLabel(String label) {
-        for (ResetArc arc : resetArcs) {
-            if (arc.getLabel().equals(label)) {
-                return arc;
-            }
+        networkState += "\nTransitions: ";
+        for (Transition transition : transitions) {
+            networkState += transition.toString();
         }
-        return null;
-    }
-
-    public InhibitorArc getInhibitorArcByLabel(String label) {
-        for (InhibitorArc arc : inhibitorArcs) {
-            if (arc.getLabel().equals(label)) {
-                return arc;
-            }
-        }
-        return null;
+        return networkState;
     }
 }
