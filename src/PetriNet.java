@@ -7,40 +7,6 @@ public class PetriNet {
     List<Transition> transitions = new ArrayList<>();
     List<Arc> arcs = new ArrayList<>();
 
-//    public void run() {
-//        List<Transition> runnableTransitions = getRunnableTransitions();
-//
-//        if (!runnableTransitions.isEmpty()) {
-//            for (Transition runnableTransition : runnableTransitions) {
-//                if (runnableTransition.is_runnable()) {
-//                    List<Arc> inArcList = runnableTransition.getInArcList();
-//                    List<Arc> outArcList = runnableTransition.getOutArcList();
-//                    for (Arc arc : inArcList) {
-//                        if (arc instanceof NormalArc) {
-//                            while (((Place) arc.getOutput()).getTokens() >= ((NormalArc) arc).getCardinality()) {
-//                                Place place = (Place) arc.getOutput();
-//                                List<Arc> placeOutArcList = place.getOutArcList();
-//                                if (placeOutArcList.size() > 1) {
-//                                    Random random = new Random();
-//                                    placeOutArcList.get(random.nextInt(placeOutArcList.size())).run();
-//                                } else {
-//                                    arc.run();
-//                                }
-//                            }
-//                        } else {
-//                            arc.run();
-//                        }
-//                    }
-//                    for (Arc arc : outArcList) {
-//                        arc.run();
-//                    }
-//                }
-//            }
-//        } else {
-//            System.out.println("Não há transições disponiveis para execução!");
-//        }
-//    }
-
     public void run() {
         int ciclo = 1;
         List<Transition> runnableTransitions = getRunnableTransitions();
