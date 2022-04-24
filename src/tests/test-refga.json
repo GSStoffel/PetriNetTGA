@@ -1,0 +1,58 @@
+{
+  "places": [
+    {"label": "L1", "tokens": 0},
+    {"label": "L2", "tokens": 2},
+    {"label": "L3", "tokens": 1},
+    {"label": "L4", "tokens": 0},
+    {"label": "L5", "tokens": 0},
+    {"label": "L6", "tokens": 0},
+    {"label": "L7", "tokens": 10},
+    {"label": "L8", "tokens": 0},
+    {"label": "L9", "tokens": 0},
+    {"label": "L10", "tokens": 0},
+    {"label": "L11", "tokens": 0},
+    {"label": "L12", "tokens": 0},
+    {"label": "L13", "tokens": 0}
+  ],
+
+  "transitions": [
+    {"label": "Ta"},
+    {"label": "Tb"},
+    {"label": "Tc"},
+    {"label": "Td"},
+    {"label": "Te"},
+    {"label": "Tf"},
+    {"label": "Tg"}
+  ],
+
+  "arc-transition-to-place": [
+    {"transition": "Ta", "place": "L4", "weight": 1},
+    {"transition": "Tb", "place": "L1", "weight": 1},
+    {"transition": "Tb", "place": "L5", "weight": 1},
+    {"transition": "Tc", "place": "L6", "weight": 1},
+    {"transition": "Td", "place": "L11", "weight": 1},
+    {"transition": "Te", "place": "L8", "weight": 1},
+    {"transition": "Te", "place": "L9", "weight": 1},
+    {"transition": "Te", "place": "L10", "weight": 1},
+    {"transition": "Tf", "place": "L2", "weight": 1},
+    {"transition": "Tf", "place": "L6", "weight": 1},
+    {"transition": "Tg", "place": "L12", "weight": 1},
+    {"transition": "Tg", "place": "L13", "weight": 1}
+  ],
+
+  "arc-place-to-transition": [
+    {"place": "L1", "transition": "Ta", "type": 0, "weight": 1},
+    {"place": "L2", "transition": "Tb", "type": 0, "weight": 1},
+    {"place": "L3", "transition": "Tc", "type": 0, "weight": 1},
+    {"place": "L4", "transition": "Td", "type": 0, "weight": 1},
+    {"place": "L5", "transition": "Te", "type": 0, "weight": 1},
+    {"place": "L6", "transition": "Te", "type": 1, "weight": 2},
+    {"place": "L7", "transition": "Td", "type": 2, "weight": 1},
+    {"place": "L8", "transition": "Td", "type": 0, "weight": 1},
+    {"place": "L8", "transition": "Tg", "type": 0, "weight": 1},
+    {"place": "L9", "transition": "Tg", "type": 0, "weight": 1},
+    {"place": "L10", "transition": "Tf", "type": 0, "weight": 1},
+    {"place": "L11", "transition": "Tg", "type": 0, "weight": 1},
+    {"place": "L13", "transition": "Tf", "type": 0, "weight": 1}
+  ]
+}
