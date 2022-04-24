@@ -57,6 +57,6 @@ public class Transition {
 
     @Override
     public String toString() {
-        return label + (is_runnable() ? " Habilitado " : " Desabilitado ");
+        return label + ": " + (is_runnable() ? "Habilitado " : "Desabilitado ");
     }
 }

@@ -41,7 +41,7 @@
   ],
 
   "arc-place-to-transition": [
-    {"place": "L1", "transition": "Ta", "type": 0, "weight": 1},
+    {"place": "L1", "transition": "Ta", "type": 0, "weight": 2},
     {"place": "L2", "transition": "Tb", "type": 0, "weight": 1},
     {"place": "L3", "transition": "Tc", "type": 0, "weight": 1},
     {"place": "L4", "transition": "Td", "type": 0, "weight": 1},

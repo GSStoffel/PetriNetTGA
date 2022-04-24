@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class PetriNet {
     List<Place> places = new ArrayList<>();
@@ -8,14 +9,49 @@ public class PetriNet {
     List<Arc> arcs = new ArrayList<>();
 
     public void run() {
-        int ciclo = 1;
+        int ciclo = 0;
         List<Transition> runnableTransitions = getRunnableTransitions();
 
         while (!runnableTransitions.isEmpty()) {
+
+            new Scanner(System.in).nextLine();
+
             System.out.println("\nEstado do ciclo " + ciclo + ": " + this + "\n\n------------------------------");
 
             for (Transition transition : runnableTransitions) {
-                executeTransition(transition);
+                while (transition.is_runnable()) {
+                    List<Arc> inArcList = transition.getInArcList();
+                    List<Arc> outArcList = transition.getOutArcList();
+
+                    for (Arc arc : inArcList) {
+
+                        // Busca arcos de saída dos Places que apontam para a transição, avaliando se há concorrência
+                        List<Arc> outputNormalArcsRunnable = ((Place) arc.getOutput()).getOutputNormalArcsRunnable();
+
+                        // Caso haja mais de um arco saindo do mesmo place, há concorrência
+                        if (outputNormalArcsRunnable.size() > 1) {
+
+                            // Gera um número alatório entre 0 e a quantidade de arcos concorrentes
+                            Random random = new Random();
+                            int index = random.nextInt(outputNormalArcsRunnable.size());
+
+                            // Arco escolhido para execução
+                            Arc chosenArc = outputNormalArcsRunnable.get(index);
+                            chosenArc.run();
+
+                            // Executa as arcos / transições apontadas pelo arco esolhido
+                            for (Arc arcFromChosenArc : ((Transition) chosenArc.getInput()).getOutArcList()) {
+                                arc.run();
+                            }
+                        } else {
+                            arc.run();
+                        }
+                    }
+
+                    for (Arc arc : outArcList) {
+                        arc.run();
+                    }
+                }
             }
             runnableTransitions = getRunnableTransitions();
             ciclo++;
@@ -24,36 +60,6 @@ public class PetriNet {
         System.out.println("\nNão há mais nenhuma transição habilitada!");
     }
 
-    private void executeTransition(Transition transition) {
-        while (transition.is_runnable()) {
-            List<Arc> inArcList = transition.getInArcList();
-            List<Arc> outArcList = transition.getOutArcList();
-
-            for (Arc arc : inArcList) {
-                if (((Place) arc.getOutput()).getOutputNormalArcsRunnable().size() > 1){
-                    Place place = (Place) arc.getOutput();
-                    List<Arc> outputNormalArcsRunnable = place.getOutputNormalArcsRunnable();
-
-                    Random random = new Random();
-                    int index = random.nextInt(outputNormalArcsRunnable.size());
-                    System.out.println("index: " + index);
-                    Arc arc1 = outputNormalArcsRunnable.get(index);
-                    arc1.run();
-                    Transition inputTransition = (Transition) arc1.getInput();
-                    List<Arc> transitionOutArcList = inputTransition.getOutArcList();
-                    for (Arc arcTransitionOutArcList : transitionOutArcList) {
-                        arcTransitionOutArcList.run();
-                    }
-                } else {
-                    arc.run();
-                }
-            }
-
-            for (Arc arc : outArcList) {
-                arc.run();
-            }
-        }
-    }
 
     public void add(Place place) {
         if (!places.contains(place))
