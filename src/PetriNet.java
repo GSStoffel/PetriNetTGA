@@ -3,6 +3,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * @author Gabriel Sperb Stoffel e Carlos Leandro Silva Machado
+ */
 public class PetriNet {
     List<Place> places = new ArrayList<>();
     List<Transition> transitions = new ArrayList<>();
@@ -39,10 +42,6 @@ public class PetriNet {
                             Arc chosenArc = outputNormalArcsRunnable.get(index);
                             chosenArc.run();
 
-                            // Executa as arcos / transições apontadas pelo arco esolhido
-                            for (Arc arcFromChosenArc : ((Transition) chosenArc.getInput()).getOutArcList()) {
-                                arc.run();
-                            }
                         } else {
                             arc.run();
                         }
